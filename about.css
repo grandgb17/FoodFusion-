@@ -1,0 +1,124 @@
+/* HERO */
+.about-hero {
+    background: linear-gradient(rgba(255,111,60,0.82), rgba(255,90,20,0.82)),
+                url("imgs/cooking.jpeg") center/cover no-repeat;
+    padding: 100px 40px;
+    text-align: center;
+    color: white;
+}
+.about-hero h1 { font-size: 48px; margin-bottom: 15px; }
+.about-hero p  { font-size: 18px; max-width: 600px; margin: 0 auto; opacity: 0.92; }
+
+/* MISSION */
+.mission {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 80px 60px;
+    background: #FAF7F2;
+    flex-wrap: wrap;
+}
+.mission img {
+    width: 420px;
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    object-fit: cover;
+    height: 300px;
+}
+.mission-text h2 { font-size: 32px; color: #ff6f3c; margin-bottom: 15px; }
+.mission-text p  { font-size: 16px; line-height: 1.8; color: #555; max-width: 500px; }
+
+/* VALUES */
+.values {
+    background: #FFF1EB;
+    padding: 70px 40px;
+    text-align: center;
+}
+.values h2 { font-size: 34px; color: #ff6f3c; margin-bottom: 40px; }
+.values-grid {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.value-card {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 16px;
+    width: 220px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+    transition: transform 0.3s;
+}
+.value-card:hover { transform: translateY(-8px); }
+.value-card .icon { font-size: 40px; margin-bottom: 12px; }
+.value-card h3 { color: #333; margin-bottom: 8px; }
+.value-card p  { font-size: 14px; color: #777; line-height: 1.6; }
+
+/* TEAM */
+.team {
+    padding: 80px 40px;
+    text-align: center;
+    background: #FAF7F2;
+}
+.team h2 { font-size: 34px; color: #ff6f3c; margin-bottom: 10px; }
+.team .subtitle { color: #777; margin-bottom: 40px; font-size: 16px; }
+.team-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.team-card {
+    background: white;
+    border-radius: 18px;
+    padding: 30px 25px;
+    width: 200px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+}
+.team-card:hover { transform: translateY(-8px); }
+.team-card .avatar {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, #ff6f3c, #ff9a3c);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+    margin: 0 auto 15px;
+}
+.team-card h4 { margin-bottom: 5px; color: #333; }
+.team-card span { font-size: 13px; color: #ff6f3c; font-weight: 600; }
+.team-card p { font-size: 13px; color: #888; margin-top: 8px; line-height: 1.5; }
+
+/* STATS BANNER */
+.stats-banner {
+    background: linear-gradient(135deg, #ff6f3c, #ff9a3c);
+    color: white;
+    padding: 60px 40px;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+.stat-item h3 { font-size: 42px; font-weight: bold; margin-bottom: 5px; }
+.stat-item p  { font-size: 15px; opacity: 0.9; }
+
+/* FOOTER */
+footer { background:#333; color:white; text-align:center; padding:20px; }
+footer a { color:#ff9966; text-decoration:none; margin:0 10px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+    .about-hero { padding: 50px 20px; }
+    .about-hero h1 { font-size: 32px; }
+    .mission { flex-direction: column; padding: 40px 20px; }
+    .mission img { width: 100%; }
+    .stats-banner { flex-wrap: wrap; padding: 30px 20px; gap: 20px; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+    .values-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+}

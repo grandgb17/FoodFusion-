@@ -1,0 +1,158 @@
+-- FoodFusion Database Schema
+CREATE DATABASE IF NOT EXISTS foodfusion;
+USE foodfusion;
+
+-- Users table
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    preference ENUM('Vegetarian','Non-Vegetarian','Vegan') DEFAULT 'Non-Vegetarian',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Recipes table
+CREATE TABLE IF NOT EXISTS recipes (
+    recipe_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT DEFAULT NULL,
+    title VARCHAR(150) NOT NULL,
+    description TEXT NOT NULL,
+    story TEXT DEFAULT NULL,
+    cuisine VARCHAR(50) DEFAULT 'General',
+    category VARCHAR(50) DEFAULT 'general',
+    difficulty ENUM('Easy','Medium','Hard') DEFAULT 'Easy',
+    dietary ENUM('Vegetarian','Non-Vegetarian','Vegan') DEFAULT 'Non-Vegetarian',
+    cook_time VARCHAR(50) DEFAULT NULL,
+    prep_time VARCHAR(50) DEFAULT NULL,
+    serves VARCHAR(20) DEFAULT NULL,
+    emoji VARCHAR(10) DEFAULT '🍽',
+    author_name VARCHAR(100) DEFAULT 'Anonymous Chef',
+    ingredients TEXT DEFAULT NULL,
+    instructions TEXT DEFAULT NULL,
+    tips TEXT DEFAULT NULL,
+    calories VARCHAR(20) DEFAULT NULL,
+    protein VARCHAR(20) DEFAULT NULL,
+    carbs VARCHAR(20) DEFAULT NULL,
+    fat VARCHAR(20) DEFAULT NULL,
+    likes INT DEFAULT 0,
+    source ENUM('collection','community') DEFAULT 'collection',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL
+);
+
+-- Contact messages table
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    subject VARCHAR(150) NOT NULL,
+    message TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Saved recipes table
+CREATE TABLE IF NOT EXISTS saved_recipes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    recipe_id INT NOT NULL,
+    saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_save (user_id, recipe_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id) ON DELETE CASCADE
+);
+
+-- Recipe likes table
+CREATE TABLE IF NOT EXISTS recipe_likes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    recipe_id INT NOT NULL,
+    liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_like (user_id, recipe_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id) ON DELETE CASCADE
+);
+
+-- Sample Recipe Collection data
+INSERT INTO recipes (title, description, story, cuisine, category, difficulty, dietary, cook_time, prep_time, serves, emoji, author_name, ingredients, instructions, tips, calories, protein, carbs, fat, likes, source) VALUES
+
+('Classic Spaghetti Carbonara',
+ 'Authentic Roman pasta with crispy pancetta, silky egg yolk sauce and Pecorino Romano. No cream — ever.',
+ 'Born in Rome after World War II, carbonara is the ultimate pantry pasta. The trick is tempering the eggs off the heat so they coat the pasta without scrambling.',
+ 'Italian','pasta','Easy','Non-Vegetarian','25 mins','10 mins','4',
+ '🍝','Chef Carlo R.',
+ 'Spaghetti 400g|Pancetta or guanciale 150g|Egg yolks 4|Pecorino Romano 80g|Black pepper to taste|Salt for pasta water',
+ 'Bring a large pot of salted water to boil and cook spaghetti until al dente.|Fry pancetta in a dry pan over medium heat until crispy. Remove from heat.|Whisk egg yolks with grated Pecorino and black pepper in a bowl.|Reserve 1 cup of pasta water before draining.|Add hot pasta to the pancetta pan off the heat. Toss well.|Add egg mixture and splash of pasta water. Toss quickly until creamy.|Serve immediately with extra Pecorino and black pepper.',
+ 'Never add cream. The starchy pasta water is your secret weapon for a silky sauce.|Take the pan off the heat before adding eggs or they will scramble.',
+ '520','28g','68g','14g',214,'collection'),
+
+('Chicken Tikka Masala',
+ 'Tender marinated chicken in a rich, spiced tomato-cream sauce. The most beloved curry in the world for good reason.',
+ 'A dish that bridges cultures — marinated chicken cooked in a tandoor then finished in a velvety masala sauce. Comfort food at its finest.',
+ 'Indian','curry','Medium','Non-Vegetarian','45 mins','20 mins','4',
+ '🍛','Chef Priya N.',
+ 'Chicken thighs 700g|Plain yoghurt 200ml|Garlic 4 cloves|Ginger 2cm piece|Garam masala 2 tsp|Cumin 1 tsp|Turmeric 1 tsp|Chilli powder 1 tsp|Tomatoes 2 cans|Double cream 150ml|Onion 1 large|Butter 2 tbsp|Coriander to garnish',
+ 'Mix yoghurt with garlic, ginger, garam masala, cumin, turmeric and chilli. Marinate chicken for at least 2 hours.|Grill or pan-fry chicken until charred. Set aside.|Fry onion in butter until golden. Add remaining spices and cook 2 mins.|Add canned tomatoes and simmer 15 mins until thickened.|Blend sauce until smooth. Return to pan, add cream and chicken.|Simmer 10 mins. Garnish with coriander and serve with naan.',
+ 'Marinate overnight for deeper flavour.|Char the chicken — that smoky flavour is essential.|Use thighs not breasts — they stay juicy.',
+ '480','42g','22g','24g',187,'collection'),
+
+('Veg Tacos',
+ 'Crispy corn tortillas loaded with spiced black beans, roasted corn, avocado and zingy salsa verde.',
+ 'Street tacos from Mexico City — vibrant, fast, and completely satisfying without a scrap of meat.',
+ 'Mexican','healthy','Easy','Vegetarian','20 mins','10 mins','3',
+ '🌮','Chef Maria L.',
+ 'Corn tortillas 6|Black beans 1 can|Corn kernels 1 cup|Avocado 1|Red onion half|Lime 2|Coriander bunch|Jalapeño 1|Cumin 1 tsp|Smoked paprika 1 tsp|Salt and pepper',
+ 'Drain and rinse black beans. Heat in a pan with cumin, paprika, salt and pepper.|Char corn in a dry pan until lightly blackened.|Mash avocado with lime juice and salt.|Dice red onion and jalapeño. Chop coriander.|Warm tortillas directly over a gas flame for 20 seconds each side.|Layer beans, corn, avocado, onion, jalapeño and coriander.|Squeeze lime generously over everything.',
+ 'Warm tortillas directly on the flame for authentic char.|Add a drizzle of hot sauce for extra kick.',
+ '320','12g','48g','9g',156,'collection'),
+
+('Beef Lasagna',
+ 'Seven layers of slow-cooked ragù, silky béchamel and freshly grated Parmigiano. A weekend labour of love.',
+ 'Every Sunday morning, my grandmother would wake up at 6am to start the ragù. She never used a recipe — everything lived in her hands. This is as close as I have ever gotten.',
+ 'Italian','pasta','Hard','Non-Vegetarian','2.5 hours','30 mins','6',
+ '🫕','Chef Sofia M.',
+ 'Beef mince 500g|Crushed tomatoes 1 can|Onion 1|Garlic 3 cloves|Bay leaves 2|Red wine 150ml|Olive oil 2 tbsp|Butter 60g|Plain flour 60g|Whole milk 700ml|Nutmeg half tsp|Lasagna sheets 12|Parmigiano Reggiano 200g|Fresh mozzarella 250g',
+ 'Sauté onion in olive oil until soft. Add garlic, then beef mince and brown well.|Add red wine and let evaporate. Add tomatoes and bay leaves. Simmer 2 hours.|Make béchamel: melt butter, stir in flour, slowly whisk in warm milk. Season with nutmeg.|Boil lasagna sheets until al dente. Drain and lay flat.|Layer pasta, ragù, béchamel, Parmigiano and mozzarella. Repeat 7 times.|Top with béchamel and Parmigiano. Cover with foil and bake 180°C for 35 mins.|Remove foil and bake 15 mins more until golden. Rest 15 mins before slicing.',
+ 'Never rush the ragù — 3 hours is better than 2.|Always use freshly grated Parmigiano, never pre-packaged.|Let it rest before cutting or it will collapse.',
+ '620','38g','52g','26g',302,'collection'),
+
+('Pad Thai',
+ 'Classic Thai stir-fried rice noodles with egg, bean sprouts, peanuts and your choice of protein.',
+ 'The ultimate Thai street food — a perfect balance of sweet, sour, salty and umami in every bite.',
+ 'Asian','noodles','Medium','Non-Vegetarian','25 mins','15 mins','2',
+ '🍜','Chef Somchai K.',
+ 'Rice noodles 200g|Eggs 2|Bean sprouts 100g|Spring onions 3|Crushed peanuts 4 tbsp|Tamarind paste 3 tbsp|Fish sauce 2 tbsp|Sugar 1 tbsp|Vegetable oil 2 tbsp|Lime 1|Tofu or prawns 150g',
+ 'Soak rice noodles in warm water for 20 mins until pliable. Drain.|Mix tamarind paste, fish sauce and sugar in a bowl. Set aside.|Heat oil in a wok until smoking. Add tofu or prawns and cook 2 mins.|Push to side, crack in eggs and scramble.|Add noodles and sauce. Toss everything together over high heat.|Add bean sprouts and toss 1 more minute.|Serve with spring onions, peanuts and lime wedges.',
+ 'High heat is essential — use your hottest burner.|Do not overcook the noodles when soaking or they will turn mushy.',
+ '490','26g','72g','12g',143,'collection'),
+
+('Chocolate Lava Cake',
+ 'Warm chocolate cakes with a molten liquid centre. Ready in 20 minutes, impossible to resist.',
+ 'The dessert that made restaurant-goers everywhere fall in love with chocolate all over again. Deceptively simple to make at home.',
+ 'French','dessert','Medium','Vegetarian','20 mins','10 mins','4',
+ '🍫','Chef Pierre D.',
+ 'Dark chocolate 200g|Butter 100g|Eggs 4|Caster sugar 100g|Plain flour 60g|Cocoa powder 2 tbsp|Vanilla extract 1 tsp|Pinch of salt|Icing sugar to dust',
+ 'Preheat oven to 200°C. Grease 4 ramekins and dust with cocoa powder.|Melt chocolate and butter together in a bowl over simmering water. Cool slightly.|Whisk eggs, sugar and vanilla until pale and thick.|Fold chocolate mixture into egg mixture.|Sift in flour and salt. Fold until just combined. Do not overmix.|Divide between ramekins. Chill 30 mins or bake straight away.|Bake exactly 12 minutes. The edges should be set but centre still wobbly.|Run a knife around edge and turn out onto plate. Dust with icing sugar.',
+ 'Timing is everything — 12 minutes is the sweet spot.|Chill the batter and bake from cold for a more reliable molten centre.|Use at least 70% dark chocolate for best flavour.',
+ '440','8g','52g','22g',389,'collection'),
+
+('Shakshuka',
+ 'Eggs poached in a spiced tomato and pepper sauce. The greatest one-pan breakfast in the world.',
+ 'A North African and Middle Eastern staple that has taken the whole world by storm. One pan, big flavours, ready in 30 minutes.',
+ 'Middle Eastern','healthy','Easy','Vegetarian','25 mins','5 mins','2',
+ '🍳','Chef Leila A.',
+ 'Eggs 4|Canned tomatoes 2 cans|Red peppers 2|Onion 1|Garlic 3 cloves|Cumin 1 tsp|Paprika 1 tsp|Chilli flakes half tsp|Olive oil 2 tbsp|Fresh parsley|Feta cheese optional|Salt and pepper',
+ 'Heat olive oil in a wide pan. Sauté onion until soft, about 5 mins.|Add sliced peppers and cook 5 mins more. Add garlic and spices, cook 1 min.|Pour in canned tomatoes. Season well. Simmer 10 mins until sauce thickens.|Make wells in the sauce and crack an egg into each one.|Cover and cook on low heat until whites are set but yolks still runny, about 7 mins.|Crumble feta over the top if using. Garnish with parsley.|Serve straight from the pan with crusty bread.',
+ 'Keep the yolks runny — that is the whole point.|Serve directly from the pan for maximum drama.|Great with warm pita or crusty sourdough.',
+ '280','18g','22g','12g',228,'collection'),
+
+('Mango Sticky Rice',
+ 'Sweet glutinous rice with coconut cream and fresh mango. Thailand is most beloved dessert.',
+ 'Every time I visit Thailand this is the first thing I eat at the market. Simple ingredients, extraordinary result.',
+ 'Asian','dessert','Easy','Vegan','30 mins','10 mins','4',
+ '🥭','Chef Nong P.',
+ 'Glutinous rice 300g|Coconut milk 400ml|Sugar 4 tbsp|Salt 1 tsp|Ripe mangoes 2|Toasted sesame seeds optional',
+ 'Soak glutinous rice in water for at least 4 hours or overnight. Drain.|Steam rice for 25 mins until tender and translucent.|Heat coconut milk with sugar and salt until sugar dissolves. Do not boil.|Mix two thirds of the coconut mixture into the hot rice. Cover and rest 15 mins.|Slice mangoes alongside the stone into elegant fans.|Serve rice moulded alongside mango. Drizzle remaining coconut sauce over.|Scatter sesame seeds if using.',
+ 'Use ripe yellow mangoes — unripe mango will ruin the dish.|The rice absorbs the coconut milk as it rests — do not skip the 15 minute rest.',
+ '380','5g','74g','8g',167,'collection');

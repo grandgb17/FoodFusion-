@@ -1,0 +1,449 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #FAF7F2;
+    color: #333;
+}
+
+/* NAVBAR header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 40px;
+    background: #ff6f3c;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+*/
+
+
+.logo { font-size: 22px; font-weight: bold; }
+
+nav a {
+    position: relative;
+    margin: 0 15px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+nav a:hover { opacity: 0.8; }
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -5px;
+    width: 0%; height: 2px;
+    background: white;
+    transition: width 0.3s;
+}
+
+nav a:hover::after,
+nav a.active::after { width: 100%; }
+
+.nav-btn {
+    background: white;
+    color: #ff6f3c;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* BACK BAR */
+.back-bar {
+    padding: 16px 5%;
+    background: white;
+    border-bottom: 1px solid #f0ece6;
+}
+
+.back-btn {
+    color: #ff6f3c;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.back-btn:hover { opacity: 0.7; }
+
+/* HERO */
+.recipe-hero {
+    background: linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(255,111,60,0.8) 100%),
+                url("imgs/CookBook.jpeg") center/cover no-repeat;
+    padding: 60px 5%;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    color: white;
+    min-height: 320px;
+}
+
+.hero-emoji {
+    font-size: 120px;
+    line-height: 1;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+    flex-shrink: 0;
+}
+
+.recipe-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+}
+
+.hero-content h1 {
+    font-size: 46px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 15px rgba(0,0,0,0.25);
+}
+
+.recipe-subtitle {
+    font-size: 16px;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 22px;
+}
+
+.meta-pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+}
+
+.pill {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+}
+
+.like-hero-btn {
+    background: white;
+    color: #ff6f3c;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.like-hero-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+.like-hero-btn.liked { background: #ff6f3c; color: white; }
+
+/* LAYOUT */
+.detail-layout {
+    display: flex;
+    gap: 30px;
+    padding: 40px 5%;
+    align-items: flex-start;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.detail-main { flex: 2; display: flex; flex-direction: column; gap: 25px; }
+.detail-sidebar { flex: 0 0 300px; display: flex; flex-direction: column; gap: 20px; position: sticky; top: 90px; }
+
+/* CARDS */
+.detail-card, .sidebar-card {
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #222;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #fff3ec;
+}
+
+/* STORY */
+.story-text {
+    color: #555;
+    line-height: 1.85;
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+.story-text:last-child { margin-bottom: 0; }
+
+/* INGREDIENTS */
+.ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 25px;
+}
+
+.ingredient-group h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff6f3c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.ingredient-group ul { list-style: none; }
+
+.ingredient-group li {
+    font-size: 14px;
+    color: #555;
+    padding: 7px 0;
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+}
+
+.qty {
+    font-weight: 700;
+    color: #333;
+    min-width: 55px;
+    font-size: 13px;
+}
+
+/* STEPS */
+.steps-list { list-style: none; display: flex; flex-direction: column; gap: 22px; }
+
+.step {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.step-num {
+    width: 38px;
+    height: 38px;
+    background: #ff6f3c;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.step-body h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 6px;
+}
+
+.step-body p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.75;
+}
+
+/* SIDEBAR */
+.sidebar-card h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #222;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #fff3ec;
+}
+
+.quick-info { list-style: none; }
+
+.quick-info li {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 14px;
+}
+
+.quick-info li span { color: #888; }
+.quick-info li strong { color: #333; }
+
+.tips-card { background: #fff8f5; }
+
+.tips-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.tips-list li {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    padding-left: 18px;
+    position: relative;
+}
+
+.tips-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #ff6f3c;
+    font-weight: 700;
+}
+
+/* NUTRITION */
+.per-serving {
+    font-size: 11px;
+    color: #aaa;
+    font-weight: 400;
+    margin-left: 6px;
+}
+
+.nutrition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.nutrient {
+    background: #fff3ec;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+}
+
+.nutrient strong {
+    display: block;
+    font-size: 22px;
+    font-weight: 800;
+    color: #ff6f3c;
+    margin-bottom: 3px;
+}
+
+.nutrient span { font-size: 12px; color: #888; }
+
+/* FOOTER */
+footer { background: #333; color: white; text-align: center; padding: 25px; margin-top: 60px; }
+footer a { color: #ff9966; text-decoration: none; margin: 0 10px; }
+footer .social { margin-bottom: 8px; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .detail-layout { flex-direction: column; }
+    .detail-sidebar { position: relative; top: 0; flex: unset; width: 100%; }
+    .recipe-hero { flex-direction: column; gap: 20px; text-align: center; padding: 40px 5%; }
+    .hero-emoji { font-size: 80px; }
+    .hero-content h1 { font-size: 30px; }
+    .meta-pills { justify-content: center; }
+    header { flex-direction: column; gap: 10px; }
+    .ingredients-grid { grid-template-columns: 1fr 1fr; }
+}
+/* Difficulty badge in sidebar */
+.diff-badge        { padding: 3px 10px; border-radius: 10px; font-size: 12px; }
+.diff-badge.easy   { background: #d4f5e2; color: #1a7a45; }
+.diff-badge.medium { background: #fff0d4; color: #a06a00; }
+.diff-badge.hard   { background: #fde0e0; color: #c0392b; }
+
+/* ── PRINT / PDF STYLES ── */
+@media print {
+    /* Hide everything that shouldn't appear in PDF */
+    header, .back-bar, footer,
+    #likeBtn, #saveBtn, #downloadBtn,
+    .like-hero-btn { display: none !important; }
+
+    /* Reset page background */
+    body { background: white; font-size: 12pt; color: #111; }
+
+    /* Hero: clean flat header block */
+    .recipe-hero {
+        background: #ff6f3c !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color: white !important;
+        padding: 30px 40px !important;
+        min-height: unset !important;
+        gap: 24px !important;
+        page-break-after: avoid;
+    }
+
+    .hero-emoji { font-size: 64px !important; }
+    .hero-content h1 { font-size: 28pt !important; }
+    .recipe-subtitle { font-size: 11pt !important; }
+
+    .pill {
+        background: rgba(255,255,255,0.25) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-size: 10pt !important;
+    }
+
+    /* Layout: stack sidebar below main on print */
+    .detail-layout {
+        display: block !important;
+        padding: 20px 0 !important;
+        max-width: 100% !important;
+    }
+
+    .detail-sidebar {
+        position: static !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 16px !important;
+        margin-top: 20px !important;
+    }
+
+    /* Cards: clean white, no heavy shadows */
+    .detail-card, .sidebar-card {
+        box-shadow: none !important;
+        border: 1px solid #eee !important;
+        padding: 18px !important;
+        margin-bottom: 14px !important;
+        page-break-inside: avoid;
+    }
+
+    /* Step numbers: keep orange */
+    .step-num {
+        background: #ff6f3c !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color: white !important;
+    }
+
+    /* Nutrition tiles */
+    .nutrient {
+        background: #fff3ec !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .nutrient strong { color: #ff6f3c !important; }
+
+    /* Tip arrows */
+    .tips-list li::before { color: #ff6f3c !important; }
+
+    /* Diff badges */
+    .diff-badge.easy   { background: #d4f5e2 !important; color: #1a7a45 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .diff-badge.medium { background: #fff0d4 !important; color: #a06a00 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .diff-badge.hard   { background: #fde0e0 !important; color: #c0392b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    /* Page setup */
+    @page {
+        margin: 15mm 18mm;
+        size: A4;
+    }
+}
